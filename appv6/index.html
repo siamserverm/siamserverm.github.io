@@ -1,11 +1,157 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="th">
 <head>
-<title>App v6</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Affiliate Landing Studio v6.1 Stable</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Landing Studio" />
 </head>
 <body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">GO</div>
+        <div><b>จัดการ Landing Page</b><span>แดชบอร์ด Affiliate • Firebase Realtime</span></div>
+      </div>
+      <button class="nav active" data-view="dashboard">แดชบอร์ด</button>
+      <button class="nav" data-view="publish">เผยแพร่</button>
+      <button class="nav" data-view="stats">สถิติคลิก</button>
+      <button class="nav" data-view="settings">ตั้งค่า</button>
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="ghost">🌗 มืด / สว่าง</button>
+      </div>
+    </aside>
 
-App v6
+    <main class="main">
+      <section class="topbar">
+        <div><h1>Affiliate Landing Studio v6.1</h1><p>เลือกโปรไฟล์งาน / Workspace ก่อนทำงาน ข้อมูลและสถิติจะไม่ปนกัน</p></div>
+        <div class="workspace-bar">
+          <div class="workspace-current">
+            <span id="currentWorkspaceBadge">Workspace: งานหลัก (main)</span>
+            <select id="workspaceSelect" title="เลือกโปรไฟล์งาน"></select>
+          </div>
+          <button id="quickNewWorkspaceBtn" class="ghost" type="button">+ งานใหม่</button>
+          <button id="quickRenameWorkspaceBtn" class="ghost" type="button">เปลี่ยนชื่อ</button>
+          <button id="quickDeleteWorkspaceBtn" class="ghost danger" type="button">ลบงาน</button>
+          <button id="newBtn" class="primary">+ เพิ่ม Landing Page</button>
+        </div>
+      </section>
 
+      <section id="dashboard" class="view active">
+        <div class="grid two">
+          <form id="productForm" class="card form-card">
+            <input type="hidden" id="editId" />
+            <h2>Landing Page</h2>
+            <label>Slug URL <small>เช่น a, b, c หรือ iphone16</small><input id="slug" placeholder="a" required /></label>
+            <div class="actions mini-actions"><button type="button" id="randomSlugBtn" class="ghost">🎲 สุ่ม Slug</button><span id="slugStatus" class="slug-status muted">พิมพ์ Slug หรือกดสุ่ม</span></div>
+            <label>ชื่อสินค้า<input id="name" placeholder="หูฟัง Bluetooth" required /></label>
+            <label>ลิงก์ Shopee<input id="shopee" placeholder="https://shopee.co.th/..." /></label>
+            <label>ลิงก์ Lazada<input id="lazada" placeholder="https://s.lazada.co.th/..." /></label>
+            <label>Meta Pixel ID <small>ไม่ใส่ก็ได้</small><input id="pixel" placeholder="1234567890" /></label>
+            <label>Google Analytics ID <small>G-XXXX ไม่ใส่ก็ได้</small><input id="ga" placeholder="G-XXXXXXXXXX" /></label>
+            <div id="dropZone" class="drop-zone">
+              <input id="imageInput" type="file" accept="image/*" hidden />
+              <img id="imagePreview" alt="preview" />
+              <p>ลากรูปมาวาง หรือคลิกเพื่อเลือกรูป</p>
+            </div>
+            <div class="actions"><button type="submit" class="primary">บันทึก</button><button type="button" id="resetBtn" class="ghost">ล้างฟอร์ม</button></div>
+          </form>
+
+          <div class="card preview-card">
+            <h2>ตัวอย่าง</h2>
+            <div class="phone">
+              <img id="pvImage" src="" alt="" />
+              <h3 id="pvName">ชื่อสินค้า</h3>
+              <a id="pvShopee" class="shop shopee">ซื้อที่ Shopee</a>
+              <a id="pvLazada" class="shop lazada">ซื้อที่ Lazada</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card list-card">
+          <div class="card-head"><h2>รายการ Landing Page</h2><div class="actions"><button id="selectAllBtn" class="ghost">เลือกทั้งหมด</button><button id="clearSelectBtn" class="ghost">ยกเลิกเลือก</button><button id="exportBtn" class="ghost">ส่งออกไฟล์ ZIP</button></div></div>
+          <div class="actions list-toolbar"><button id="publishSelectedBtn" class="primary">🚀 เผยแพร่รายการที่เลือก</button><button id="deleteWebSelectedBtn" class="ghost danger">ลบจากเว็บไซต์รายการที่เลือก</button><button id="backupBtn" class="ghost">สำรองข้อมูล</button><button id="restoreBtn" class="ghost">คืนค่าข้อมูล</button><input id="restoreInput" type="file" accept=".json,.zip,application/json,application/zip" hidden /></div>
+          <p class="muted">ลากไฟล์ Backup JSON หรือ ZIP มาวางที่หน้านี้เพื่อนำเข้าได้เลย</p>
+          <div id="productList" class="product-list"></div>
+        </div>
+      </section>
+
+      <section id="publish" class="view">
+        <div class="card">
+          <h2>เผยแพร่ ไปที่ GitHub Pages</h2>
+          <p class="muted">ใช้ GitHub Personal Access Token ของคุณเอง Token จะเก็บในเครื่องนี้เท่านั้น ไม่ส่งไปที่อื่นนอกจาก GitHub API</p>
+          <div class="grid two compact">
+            <label>GitHub Username / Owner<input id="ghOwner" placeholder="your-github-name" /></label>
+            <label>Repository<input id="ghRepo" placeholder="siamserverm.github.io" /></label>
+            <label>Branch<input id="ghBranch" value="main" /></label>
+            <label>Custom Domain <small>ไม่ใส่ก็ได้</small><input id="customDomain" placeholder="yourdomain.com" /></label>
+          </div>
+          <label>GitHub Token<input id="ghToken" type="password" placeholder="github_pat_..." /></label>
+          <label class="check"><input id="rememberGh" type="checkbox" checked /> จำค่า GitHub / Token ไว้ในเครื่องนี้</label>
+          <div class="actions"><button id="publishBtn" class="primary">🚀 เผยแพร่ทั้งหมด</button><button id="saveGhBtn" class="ghost">บันทึกค่า</button><button id="testGhBtn" class="ghost">ทดสอบการเชื่อมต่อ</button><button id="logoutGhBtn" class="ghost danger">ออกจากระบบ</button></div>
+          <pre id="publishLog"></pre>
+        </div>
+      </section>
+
+      <section id="stats" class="view">
+        <div class="card">
+          <div class="card-head"><h2>สถิติจำนวนคลิก</h2><div class="actions"><button id="refreshStatsBtn" class="ghost">รีเฟรชตอนนี้</button><button id="toggleRealtimeBtn" class="primary">เริ่มเรียลไทม์</button><button id="resetStatsBtn" class="ghost danger">ล้างสถิติในเครื่องนี้</button></div></div>
+          <p class="muted">โหมดจริงจะดึงจาก Firebase Realtime Database ถ้ายังเชื่อมไม่ได้ ระบบจะแสดงยอดคลิกที่เก็บในเครื่องเป็นสำรอง</p>
+          <div class="stats-filter">
+            <button id="rangeTodayBtn" class="ghost active" type="button">วันนี้</button>
+            <button id="rangeYesterdayBtn" class="ghost" type="button">เมื่อวาน</button>
+            <button id="range7Btn" class="ghost" type="button">7 วัน</button>
+            <button id="range30Btn" class="ghost" type="button">30 วัน</button>
+            <label>จาก<input id="statsFrom" type="date" /></label>
+            <label>ถึง<input id="statsTo" type="date" /></label>
+            <button id="rangeCustomBtn" class="ghost" type="button">กำหนดเอง</button>
+            <button id="exportStatsBtn" class="primary" type="button">ส่งออก Excel</button>
+          </div>
+          <div id="realtimeStatus" class="rt-status muted">สถานะ: ยังไม่ได้เริ่มเรียลไทม์</div>
+          <div id="statsRangeLabel" class="muted">ช่วงเวลา: วันนี้</div>
+          <div id="statsSummary" class="stats-summary"></div>
+          <div id="statsList" class="stats-list"></div>
+        </div>
+      </section>
+
+      <section id="settings" class="view">
+        <div class="grid two">
+          <div class="card">
+            <h2>ผู้ใช้ / โปรไฟล์งาน Workspace</h2>
+            <p class="muted">ใช้แยกงานไม่ให้ Landing Page และสถิติปนกัน หลายคนใช้ Workspace ID เดียวกันเพื่อดูสถิติชุดเดียวกันได้</p>
+            <label>ชื่อผู้ใช้<input id="userName" placeholder="เช่น Admin / ทีมยิงแอด / Toei" /></label>
+            <label>User ID <small>ระบบสุ่มให้ แก้ได้ถ้าต้องการ</small><input id="userId" placeholder="user-xxxx" /></label>
+            <label>Workspace ID <small>ใช้ตัวเดียวกันในทีม งานจะไม่ปนกัน</small><input id="workspaceId" placeholder="main" /></label>
+            <label>ชื่อ Workspace<input id="workspaceName" placeholder="เช่น งาน Shopee เดือนนี้" /></label>
+            <div class="actions"><button id="saveWorkspaceBtn" class="primary" type="button">บันทึก / สลับ Workspace</button><button id="newWorkspaceBtn" class="ghost" type="button">สร้าง Workspace ใหม่</button><button id="duplicateWorkspaceBtn" class="ghost" type="button">คัดลอกงานนี้</button></div>
+            <div class="workspace-manager-card">
+              <h3>รายการโปรไฟล์งาน</h3>
+              <p class="muted">เลือกจากรายการนี้ได้เลย ไม่ต้องจำ Workspace ID เอง</p>
+              <div id="workspaceListBox" class="workspace-list-box"></div>
+            </div>
+            <p class="muted">ตัวอย่าง: งาน A ใช้ <b>workspace-a</b>, งาน B ใช้ <b>workspace-b</b> สถิติจะถูกเก็บคนละโฟลเดอร์ใน Firebase</p>
+          </div>
+          <div class="card">
+            <h2>ตั้งค่า Firebase Realtime</h2>
+            <p class="muted">ใช้ Firebase Realtime Database เป็นฐานข้อมูลนับคลิกจริง ไม่ต้องใช้ Apps Script / Cloudflare / GA4 Realtime API</p>
+            <label>Firebase Realtime Database URL<input id="firebaseDbUrl" placeholder="https://...firebasedatabase.app" /></label>
+            <label>รีเฟรชทุกกี่วินาที<input id="firebaseRefreshSec" type="number" min="2" value="5" /></label>
+            <details class="details-box"><summary>ยังต้องการใช้ Google Analytics ไหม?</summary><label>Measurement ID ค่าเริ่มต้น <small>ไม่บังคับ ใช้เก็บ Page view/Event ใน GA4 ได้</small><input id="globalGa" placeholder="G-XXXXXXXXXX" /></label><div class="actions"><button id="testGaBtn" class="ghost">ทดสอบรูปแบบ GA ID</button></div></details>
+            <div class="actions"><button id="saveGaBtn" class="primary">บันทึก Firebase</button><button id="testRealtimeBtn" class="ghost">ทดสอบ Realtime</button></div>
+            <p class="muted">Database ที่ตั้งไว้ให้แล้ว: <b>affiliate-landing-stats</b></p>
+            <p class="muted">ตอนส่งออก ZIP / เผยแพร่ ระบบจะฝัง Firebase URL นี้ลงใน Landing Page เพื่อให้นับคลิกจากทุกเครื่องรวมกัน</p>
+          </div>
+          <div class="card"><h2>วิธีใช้งานเร็ว ๆ</h2><ol><li>เพิ่มสินค้าและใส่ slug เช่น <b>a</b></li><li>ใส่รูป + ลิงก์ Shopee/Lazada</li><li>ถ้าช่อง Google Analytics ID ของสินค้าเว้นว่าง ระบบจะใช้ค่าเริ่มต้นจากหน้านี้</li><li>กดส่งออก ZIP หรือเผยแพร่ผ่าน GitHub Pages</li><li>เว็บจะได้ลิงก์แบบ <b>/a</b> และเริ่มนับคลิก Shopee/Lazada เข้า Firebase Realtime</li><li>รูปจะถูกเก็บใน IndexedDB ไม่กินพื้นที่ localStorage แล้ว</li></ol></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="assets/jszip.min.js"></script>
+  <script src="assets/app.js"></script>
+  <script>if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(console.warn));}</script>
 </body>
 </html>
