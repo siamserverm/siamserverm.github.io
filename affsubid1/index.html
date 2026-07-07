@@ -3,29 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบวิเคราะห์ข้อมูล SubID Affiliate (Shopee + Lazada)</title><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ixqqs8TfrdbEmGMFKH47oa4bdm5oAQK93M84vEMu42JFZI-ThMIiplTNtf0uTdKn22Bw1P2v-SjcTZCkRY6WwcIb4sWeLyPlZJDR4NzwxE7oxYNlxpZHX-ubrbOXvM9-rEsdMRM9kBLJcFcVnw65j0VbuDT_apD2SK29nytLmLaebR0sif8BVZytV_1FqAP05BoRAVTujXcUNj3IcSMcOip_cKfEZRR_ur0VJL94rLR0_m2TT9W4pcqwGfrYMDUMsDOGEV6MYbkBgmQIrhbA2Q" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <title>ระบบวิเคราะห์ข้อมูล SubID Affiliate (Shopee + Lazada)</title><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=W3IObKfdR4-mnXyxhYiAHs1yXPjUbI-SC2em8VomaGsucMpqL_qk9Eo3h0dCpsbKWpkQDwnjImlFJ6RgKO389nspnQCM9XBAI5TRcsyo0wr_uR4sxnlN9YnyPqCtzUCeuKtl3NXlYQqHhwibjU2jV77E-VmopDJTtSknvmYIRhdmS8BRKROEuLFBxWObWLxf0tZCneUXSVPCM1q7zpxb1cZaczgxLLtmOf729lHSyJAPA_dGhnb1980M1kdhVMMzND5dWOSWqJ3s1zt_4yiElA" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     
-    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-    
-<script>
-/* Mobile Safe Patch 2026: keep page alive on phones even if a CDN is slow/blocked. */
-(function(){
-  window.__SUBID_MOBILE_SAFE__ = true;
-  window.addEventListener('error', function(e){
-    try { console.warn('[MobileSafe] Script error:', e && (e.message || e.type)); } catch(_) {}
-  }, true);
-  window.addEventListener('unhandledrejection', function(e){
-    try { console.warn('[MobileSafe] Promise rejection:', e && e.reason); } catch(_) {}
-  });
-})();
-</script>
-
-<style>
+    <style>
         th.sortable { cursor: pointer; user-select: none; }
         th.sortable:hover { background-color: rgba(156, 163, 175, 0.2); }
 
@@ -1796,18 +1782,26 @@ document.addEventListener('DOMContentLoaded',()=>{
 </style>
 
 
-<style>
-/* Mobile Compatibility Fix */
-@media (max-width: 768px){
-  html, body { width:100% !important; max-width:100% !important; overflow-x:hidden !important; }
-  body#mainBody::after { display:none !important; }
-  main.container { width:100% !important; max-width:100% !important; }
-  #sidebar-panel, #content-panel { width:100% !important; max-width:100% !important; min-width:0 !important; }
-  .overflow-x-auto { -webkit-overflow-scrolling: touch !important; }
-  table { min-width:720px; }
-  .bg-card, header { -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
-}
-</style>
+<script>
+(function(){
+  window.addEventListener('error', function(e){
+    try{
+      var box=document.getElementById('mobile-error-box');
+      if(!box){
+        box=document.createElement('div');
+        box.id='mobile-error-box';
+        box.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:2147483647;background:#7f1d1d;color:#fff;padding:10px;border-radius:10px;font:12px/1.4 sans-serif;white-space:pre-wrap;box-shadow:0 8px 30px rgba(0,0,0,.35)';
+        document.addEventListener('DOMContentLoaded',function(){document.body.appendChild(box);});
+        if(document.body) document.body.appendChild(box);
+      }
+      box.textContent='JS Error: '+(e.message||'unknown')+'\n'+(e.filename||'')+':'+(e.lineno||'');
+    }catch(_){}
+  }, true);
+  window.addEventListener('unhandledrejection', function(e){
+    try{ console.warn('Unhandled rejection', e.reason); }catch(_){}
+  });
+})();
+</script>
 </head>
 <body id="mainBody" class="theme-dark min-h-screen font-sans transition-colors duration-200 overflow-x-hidden v7-clean">
 
