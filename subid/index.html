@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบวิเคราะห์ข้อมูล SubID Affiliate (Shopee + Lazada)</title><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=W3IObKfdR4-mnXyxhYiAHs1yXPjUbI-SC2em8VomaGsucMpqL_qk9Eo3h0dCpsbKWpkQDwnjImlFJ6RgKO389nspnQCM9XBAI5TRcsyo0wr_uR4sxnlN9YnyPqCtzUCeuKtl3NXlYQqHhwibjU2jV77E-VmopDJTtSknvmYIRhdmS8BRKROEuLFBxWObWLxf0tZCneUXSVPCM1q7zpxb1cZaczgxLLtmOf729lHSyJAPA_dGhnb1980M1kdhVMMzND5dWOSWqJ3s1zt_4yiElA" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
+    <title>ระบบวิเคราะห์ข้อมูล SubID Affiliate (Shopee + Lazada)</title><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=jxwE3aV3NcP3ziPHb7mnfWyoQO0IPegyXO8-iADjko8TVG0dOFW7bm2cxXJLmyVXsUcIJUsI_0CgCmcoiVyQbtbtNSEwbZ7M5G4jpz9oZqwZo2znHbhdaRYl47kDUuiDXtQ5HCfqQeVMdGiK4ZNG1AZf7Hfumbi6Kni4mV3i_g_xnA0CE2rBpeJw7Z241OOLxW5_msbokg_9jh3TU1SPF-ivcrAbWvpZILW5mPyZjExCU4W21RjHcS-npGcUIBhf6nAJjB8kpCJ_4sL4SXODPg" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -864,7 +864,7 @@ body#mainBody::before {
     background:
         radial-gradient(circle at 10% 10%, var(--skin-soft), transparent 32%),
         radial-gradient(circle at 88% 12%, var(--skin-soft-2), transparent 34%),
-        radial-gradient(circle at 70% 90%, rgba(139,92,246,.18), transparent 34%) !important;
+        radial-gradient(circle at 70% 90%, color-mix(in srgb, var(--skin-third) 18%, transparent), transparent 34%) !important;
 }
 header h1 {
     background: linear-gradient(90deg, var(--skin-primary), var(--skin-secondary), var(--skin-third)) !important;
@@ -1522,6 +1522,16 @@ button.hidden {
         max-height:calc(100vh - 76px) !important;
     }
 }
+
+
+/* Mobile stability patch: prevent viewport overflow/freezing on small screens */
+@media (max-width: 768px) {
+  html, body { max-width: 100%; overflow-x: hidden; }
+  main.container { width: 100% !important; max-width: 100% !important; }
+  .overflow-x-auto { -webkit-overflow-scrolling: touch; }
+  table { min-width: max-content; }
+  button, input, select, textarea { touch-action: manipulation; }
+}
 </style>
 
 <style>
@@ -1781,27 +1791,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 @media(max-width:760px){ .ss-inner{padding:18px}.ss-card{padding:22px;border-radius:26px}.ss-top{flex-direction:column}.ss-clock{text-align:left}.ss-grid{grid-template-columns:1fr}.ss-footer{flex-direction:column;align-items:flex-start} }
 </style>
 
-
-<script>
-(function(){
-  window.addEventListener('error', function(e){
-    try{
-      var box=document.getElementById('mobile-error-box');
-      if(!box){
-        box=document.createElement('div');
-        box.id='mobile-error-box';
-        box.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:2147483647;background:#7f1d1d;color:#fff;padding:10px;border-radius:10px;font:12px/1.4 sans-serif;white-space:pre-wrap;box-shadow:0 8px 30px rgba(0,0,0,.35)';
-        document.addEventListener('DOMContentLoaded',function(){document.body.appendChild(box);});
-        if(document.body) document.body.appendChild(box);
-      }
-      box.textContent='JS Error: '+(e.message||'unknown')+'\n'+(e.filename||'')+':'+(e.lineno||'');
-    }catch(_){}
-  }, true);
-  window.addEventListener('unhandledrejection', function(e){
-    try{ console.warn('Unhandled rejection', e.reason); }catch(_){}
-  });
-})();
-</script>
 </head>
 <body id="mainBody" class="theme-dark min-h-screen font-sans transition-colors duration-200 overflow-x-hidden v7-clean">
 
