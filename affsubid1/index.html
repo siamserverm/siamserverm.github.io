@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบวิเคราะห์ข้อมูล SubID Affiliate (Shopee + Lazada)</title><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=5JxUIB6OyaCQG-i4fz_6HegSsPQEAJJkv-M9pMydTL-LrizHe28mgNEpEBMuB-QLJ89ClyMcDctJ-7ix02rZZdaRqwWONNezstPjg2TBTPrB4pfoAeOAHyhuu-7dyAEL4oRfE8WWo8Xws9JFhdFbJ-sboYPVsQFSmaOP4JgLbdF4dADpduDOHtFMBJFJHLXayEDk-dlcEeGAeLnm06fyTSSlK2ROkXiMmocSV_ccuyDGDFAl3WUumHVR0iPwCxeONU6_BhLzLoHWOca8YbgHhA" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <title>ระบบวิเคราะห์ข้อมูล SubID Affiliate (Shopee + Lazada)</title><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ixqqs8TfrdbEmGMFKH47oa4bdm5oAQK93M84vEMu42JFZI-ThMIiplTNtf0uTdKn22Bw1P2v-SjcTZCkRY6WwcIb4sWeLyPlZJDR4NzwxE7oxYNlxpZHX-ubrbOXvM9-rEsdMRM9kBLJcFcVnw65j0VbuDT_apD2SK29nytLmLaebR0sif8BVZytV_1FqAP05BoRAVTujXcUNj3IcSMcOip_cKfEZRR_ur0VJL94rLR0_m2TT9W4pcqwGfrYMDUMsDOGEV6MYbkBgmQIrhbA2Q" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-    <style>
+    
+<script>
+/* Mobile Safe Patch 2026: keep page alive on phones even if a CDN is slow/blocked. */
+(function(){
+  window.__SUBID_MOBILE_SAFE__ = true;
+  window.addEventListener('error', function(e){
+    try { console.warn('[MobileSafe] Script error:', e && (e.message || e.type)); } catch(_) {}
+  }, true);
+  window.addEventListener('unhandledrejection', function(e){
+    try { console.warn('[MobileSafe] Promise rejection:', e && e.reason); } catch(_) {}
+  });
+})();
+</script>
+
+<style>
         th.sortable { cursor: pointer; user-select: none; }
         th.sortable:hover { background-color: rgba(156, 163, 175, 0.2); }
 
@@ -864,7 +878,7 @@ body#mainBody::before {
     background:
         radial-gradient(circle at 10% 10%, var(--skin-soft), transparent 32%),
         radial-gradient(circle at 88% 12%, var(--skin-soft-2), transparent 34%),
-        radial-gradient(circle at 70% 90%, color-mix(in srgb, var(--skin-third) 18%, transparent), transparent 34%) !important;
+        radial-gradient(circle at 70% 90%, rgba(139,92,246,.18), transparent 34%) !important;
 }
 header h1 {
     background: linear-gradient(90deg, var(--skin-primary), var(--skin-secondary), var(--skin-third)) !important;
@@ -1781,6 +1795,19 @@ document.addEventListener('DOMContentLoaded',()=>{
 @media(max-width:760px){ .ss-inner{padding:18px}.ss-card{padding:22px;border-radius:26px}.ss-top{flex-direction:column}.ss-clock{text-align:left}.ss-grid{grid-template-columns:1fr}.ss-footer{flex-direction:column;align-items:flex-start} }
 </style>
 
+
+<style>
+/* Mobile Compatibility Fix */
+@media (max-width: 768px){
+  html, body { width:100% !important; max-width:100% !important; overflow-x:hidden !important; }
+  body#mainBody::after { display:none !important; }
+  main.container { width:100% !important; max-width:100% !important; }
+  #sidebar-panel, #content-panel { width:100% !important; max-width:100% !important; min-width:0 !important; }
+  .overflow-x-auto { -webkit-overflow-scrolling: touch !important; }
+  table { min-width:720px; }
+  .bg-card, header { -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+}
+</style>
 </head>
 <body id="mainBody" class="theme-dark min-h-screen font-sans transition-colors duration-200 overflow-x-hidden v7-clean">
 
