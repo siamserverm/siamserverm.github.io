@@ -3,48 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>กดที่นี่เพื่อดูสินค้า</title>
+<title>กำลังเปิดแอป</title>
 <style>
-html,body{
-  margin:0;
-  min-height:100%;
-  font-family:Arial,"Noto Sans Thai",sans-serif;
-  background:#ffffff;
-}
-body{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-}
-#dualLink{
-  font-size:28px;
-  font-weight:800;
-  color:#1769ff;
-  text-decoration:underline;
-  cursor:pointer;
-  text-align:center;
-}
+html,body{margin:0;min-height:100%;font-family:Arial,"Noto Sans Thai",sans-serif;background:#fff}
+body{display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.status{font-size:20px;font-weight:700}
 </style>
 </head>
 <body>
-<a id="dualLink" href="#">กดที่นี่เพื่อดูสินค้า</a>
+<div class="status">กำลังเปิด Shopee และ Lazada…</div>
 <script>
-const shopeeUrl = "https://s.shopee.co.th/9UzwuFb4Xg";
-const lazadaUrl = "https://s.lazada.co.th/s.ZiYH5j?c=d&t=p-iHbM04o-s2EhG27g";
-const delayMs = 3000;
+const shopeeUrl="https://s.shopee.co.th/4AyQcwWfXG";
+const lazadaUrl="https://s.lazada.co.th/s.ZiYF7H?c=d&t=p-iHbM04o-s2EhG27g";
 
-document.getElementById('dualLink').addEventListener('click', function(event){
-  event.preventDefault();
+function runAutoFlow(){
+  const stage=sessionStorage.getItem('dualRedirectStage')||'start';
 
-  if(confirm('ยืนยันเพื่อเปิดลิงก์ Shopee หรือไม่?')){
-    window.open(shopeeUrl, '_blank', 'noopener');
+  if(stage==='start'){
+    if(confirm('ยืนยันเพื่อเปิด Shopee หรือไม่?')){
+      sessionStorage.setItem('dualRedirectStage','shopee_opened');
+      window.location.href=shopeeUrl;
+    }
+    return;
+  }
 
+  if(stage==='shopee_opened'){
+    sessionStorage.setItem('dualRedirectStage','done');
     setTimeout(function(){
-      if(confirm('ครบเวลาแล้ว ยืนยันเพื่อเปิดลิงก์ Lazada หรือไม่?')){
-        window.location.href = lazadaUrl;
+      if(confirm('ยืนยันเพื่อเปิด Lazada ต่อหรือไม่?')){
+        window.location.href=lazadaUrl;
       }
-    }, delayMs);
+    },300);
+    return;
+  }
+
+  sessionStorage.removeItem('dualRedirectStage');
+}
+
+window.addEventListener('pageshow',runAutoFlow);
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden){
+    setTimeout(runAutoFlow,300);
   }
 });
 </script>
