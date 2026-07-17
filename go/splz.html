@@ -3,51 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>กำลังเปิดแอพ</title>
+<title>กำลังเปิดแอป</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;font-family:Arial,"Noto Sans Thai",sans-serif;background:#fff}
 body{display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
 .box{width:min(420px,100%);padding:24px;border-radius:18px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.14)}
-h2{margin:0 0 10px}.status{color:#555;line-height:1.6}.fallback{display:none;margin-top:16px}
-button{width:100%;border:0;border-radius:12px;padding:14px;font-size:17px;font-weight:800;color:#fff;background:#ee4d2d}
+h2{margin:0 0 10px}.status{color:#555;line-height:1.6}
 </style>
 </head>
 <body>
 <div class="box">
-  <h2>กำลังเปิด Shopee</h2>
-  <div class="status">ระบบจะเปิด Lazada ต่อใน 3 วินาที ไม่ว่าจะเปิด Shopee สำเร็จหรือไม่</div>
-  <div class="fallback" id="fallback">
-    <button id="manualShopee">เปิด Shopee ด้วยตนเอง</button>
-  </div>
+  <h2>กำลังเปิดแอป</h2>
+  <div class="status" id="status">กำลังเปิด Shopee และจะเปิด Lazada ต่อใน 3 วินาที</div>
 </div>
-
 <script>
-const SHOPEE="https://s.shopee.co.th/4AyQcwWfXG";
-const LAZADA="https://s.lazada.co.th/s.ZiYwOb?c=c&t=p-iHbM04o-s2EhG27g";
-const DELAY=3000;
+const SHOPEE_URL="https://s.shopee.co.th/4AyQcwWfXG";
+const LAZADA_URL="https://s.lazada.co.th/s.ZiYDOh?c=d&t=p-iHbM04o-s2EhG27g";
+const DELAY_MS=3000;
 
 function openShopee(){
-  let popup=null;
   try{
-    popup=window.open(SHOPEE,'_blank','noopener,noreferrer');
-  }catch(e){}
-
-  if(!popup){
-    document.getElementById('fallback').style.display='block';
+    const popup=window.open(SHOPEE_URL,'_blank','noopener,noreferrer');
+    if(!popup){
+      window.location.href=SHOPEE_URL;
+    }
+  }catch(e){
+    window.location.href=SHOPEE_URL;
   }
 }
 
-document.getElementById('manualShopee').addEventListener('click',function(){
-  window.open(SHOPEE,'_blank','noopener,noreferrer');
-});
+function openLazada(){
+  document.getElementById('status').textContent='กำลังเปิด Lazada';
+  window.location.href=LAZADA_URL;
+}
 
 window.addEventListener('load',function(){
+  setTimeout(openLazada,DELAY_MS);
   openShopee();
-
-  setTimeout(function(){
-    window.location.replace(LAZADA);
-  },DELAY);
 });
 </script>
 </body>
