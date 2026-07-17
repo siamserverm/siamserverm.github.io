@@ -3,79 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>เปิดแอพสินค้า</title>
+<title>กำลังเปิดแอพ</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Arial,"Noto Sans Thai",sans-serif;background:#f3f4f6}
-body{display:flex;align-items:center;justify-content:center;padding:20px}
-.box{width:min(420px,100%);background:white;border-radius:18px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center}
-h2{margin:0 0 10px}.status{color:#555;line-height:1.55;margin-bottom:18px}
-button{width:100%;border:0;border-radius:12px;padding:15px;font-size:18px;font-weight:800;color:white;cursor:pointer}
-#okShopee{background:#ee4d2d}
-#okLazada{background:#0f146d;display:none}
-#done{display:none;color:#555}
+html,body{margin:0;min-height:100%;font-family:Arial,"Noto Sans Thai",sans-serif;background:#fff}
+body{display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+.box{width:min(420px,100%);padding:24px;border-radius:18px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.14)}
+h2{margin:0 0 10px}.status{color:#555;line-height:1.6}.fallback{display:none;margin-top:16px}
+button{width:100%;border:0;border-radius:12px;padding:14px;font-size:17px;font-weight:800;color:#fff;background:#ee4d2d}
 </style>
 </head>
 <body>
 <div class="box">
-  <h2 id="title">ยืนยันเปิด Shopee</h2>
-  <div class="status" id="status">กด OK เพื่อไปยัง Shopee ทันที</div>
-  <button id="okShopee">OK — เปิด Shopee</button>
-  <button id="okLazada">OK — เปิด Lazada</button>
-  <div id="done">ดำเนินการครบแล้ว</div>
+  <h2>กำลังเปิด Shopee</h2>
+  <div class="status">ระบบจะเปิด Lazada ต่อใน 3 วินาที ไม่ว่าจะเปิด Shopee สำเร็จหรือไม่</div>
+  <div class="fallback" id="fallback">
+    <button id="manualShopee">เปิด Shopee ด้วยตนเอง</button>
+  </div>
 </div>
+
 <script>
 const SHOPEE="https://s.shopee.co.th/4AyQcwWfXG";
-const LAZADA="https://s.lazada.co.th/s.ZiYEyr?c=c&t=p-iHbM04o-s2EhG27g";
+const LAZADA="https://s.lazada.co.th/s.ZiYwOb?c=c&t=p-iHbM04o-s2EhG27g";
 const DELAY=3000;
-let shopeeOpenedAt=0;
-let lazadaReady=false;
 
-function openByUserGesture(url){
-  const a=document.createElement('a');
-  a.href=url;
-  a.target='_blank';
-  a.rel='noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
+function openShopee(){
+  let popup=null;
+  try{
+    popup=window.open(SHOPEE,'_blank','noopener,noreferrer');
+  }catch(e){}
 
-function updateLazada(){
-  if(!shopeeOpenedAt || lazadaReady) return;
-  const elapsed=Date.now()-shopeeOpenedAt;
-  if(elapsed>=DELAY){
-    lazadaReady=true;
-    document.getElementById('title').textContent='ยืนยันเปิด Lazada';
-    document.getElementById('status').textContent='ครบเวลาแล้ว กด OK เพื่อไปยัง Lazada';
-    document.getElementById('okShopee').style.display='none';
-    document.getElementById('okLazada').style.display='block';
-  }else{
-    setTimeout(updateLazada,Math.max(100,DELAY-elapsed));
+  if(!popup){
+    document.getElementById('fallback').style.display='block';
   }
 }
 
-document.getElementById('okShopee').addEventListener('click',function(){
-  shopeeOpenedAt=Date.now();
-  sessionStorage.setItem('shopeeOpenedAt',String(shopeeOpenedAt));
-  document.getElementById('status').textContent='กำลังเปิด Shopee… เมื่อกลับมาหน้านี้ ระบบจะแสดง Lazada ต่อ';
-  openByUserGesture(SHOPEE);
-  setTimeout(updateLazada,DELAY);
+document.getElementById('manualShopee').addEventListener('click',function(){
+  window.open(SHOPEE,'_blank','noopener,noreferrer');
 });
 
-document.getElementById('okLazada').addEventListener('click',function(){
-  openByUserGesture(LAZADA);
-  document.getElementById('okLazada').style.display='none';
-  document.getElementById('title').textContent='เสร็จสิ้น';
-  document.getElementById('status').style.display='none';
-  document.getElementById('done').style.display='block';
-  sessionStorage.removeItem('shopeeOpenedAt');
-});
+window.addEventListener('load',function(){
+  openShopee();
 
-const saved=Number(sessionStorage.getItem('shopeeOpenedAt')||0);
-if(saved){shopeeOpenedAt=saved;updateLazada()}
-document.addEventListener('visibilitychange',function(){if(!document.hidden) updateLazada()});
-window.addEventListener('pageshow',updateLazada);
+  setTimeout(function(){
+    window.location.replace(LAZADA);
+  },DELAY);
+});
 </script>
 </body>
 </html>
