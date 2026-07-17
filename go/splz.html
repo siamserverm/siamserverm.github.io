@@ -1,46 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>กำลังเปิดแอป</title>
+<title>V1 — Iframe Original Engine</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Arial,"Noto Sans Thai",sans-serif;background:#fff}
-body{display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
-.box{width:min(420px,100%);padding:24px;border-radius:18px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.14)}
-h2{margin:0 0 10px}.status{color:#555;line-height:1.6}
+html,body{margin:0;min-height:100%;font-family:Arial,"Noto Sans Thai",sans-serif}
+body{display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(145deg,#0f172a,#312e81);color:#fff}
+.card{width:min(480px,100%);padding:24px;border:1px solid rgba(255,255,255,.18);border-radius:28px;background:rgba(255,255,255,.12);backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.35);text-align:center}
+h1{margin:0 0 10px;font-size:26px}.status{line-height:1.6;color:rgba(255,255,255,.82)}
+.small{margin-top:14px;font-size:12px;color:rgba(255,255,255,.62)}
 </style>
 </head>
 <body>
-<div class="box">
-  <h2>กำลังเปิดแอป</h2>
-  <div class="status" id="status">กำลังเปิด Shopee และจะเปิด Lazada ต่อใน 3 วินาที</div>
-</div>
+<main class="card">
+<h1>V1 — Iframe Original Engine</h1>
+<div id="status" class="status">กำลังเปิด Shopee และจะเปิด Lazada ต่อ</div>
+<div class="small">ระบบจะเริ่มอัตโนมัติเมื่อเข้าหน้านี้</div>
+</main>
 <script>
-const SHOPEE_URL="https://s.shopee.co.th/4AyQcwWfXG";
-const LAZADA_URL="https://s.lazada.co.th/s.ZiYDOh?c=d&t=p-iHbM04o-s2EhG27g";
-const DELAY_MS=3000;
+const SHOPEE_URL = "https://s.shopee.co.th/4AyQcwWfXG";
+const LAZADA_URL = "https://s.lazada.co.th/s.Zi1aUs?c=d&t=p-iHbM04o-s2EhG27g";
+const DELAY_MS = 3000;
+function setStatus(t){const e=document.getElementById("status");if(e)e.textContent=t;}
 
 function openShopee(){
+  if(!SHOPEE_URL)return;
   try{
-    const popup=window.open(SHOPEE_URL,'_blank','noopener,noreferrer');
-    if(!popup){
-      window.location.href=SHOPEE_URL;
-    }
-  }catch(e){
-    window.location.href=SHOPEE_URL;
-  }
+    setStatus("กำลังเปิดแอป Shopee...");
+    const frame=document.createElement("iframe");
+    frame.style.cssText="display:none;width:1px;height:1px;border:0";
+    frame.src=SHOPEE_URL;
+    document.body.appendChild(frame);
+    setTimeout(()=>{try{frame.remove()}catch(e){}},2500);
+  }catch(e){}
 }
-
 function openLazada(){
-  document.getElementById('status').textContent='กำลังเปิด Lazada';
+  setStatus("กำลังเปิดลิงก์ Lazada...");
   window.location.href=LAZADA_URL;
 }
-
-window.addEventListener('load',function(){
-  setTimeout(openLazada,DELAY_MS);
+window.addEventListener("load",()=>{
   openShopee();
+  setTimeout(openLazada,DELAY_MS);
 });
 </script>
 </body>
